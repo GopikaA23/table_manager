@@ -1,0 +1,23 @@
+.table {
+  border: 2px solid black;
+}
+th {
+  border-bottom: 1px solid green;
+  width: fit-content;
+}
+
+.odd {
+  background-color: hwb(0 90% 10%);
+  height: 30px;
+  padding: 5px;
+}
+
+.even {
+  background-color: rgb(246, 238, 238);
+  height: 30px;
+  padding: 5px;
+}
+
+.list {
+  text-align: start;
+}
