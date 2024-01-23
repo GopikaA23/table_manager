@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MultiSelectDropdown from "./MultiSelectDropdown";
 
 const optionList = [
@@ -25,6 +25,7 @@ const TableComponent = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [details, setDetails] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState();
+  // const [detailsButtonVisible, setDetailsButtonVisible] = useState(true);
 
   const handleSelect = (optionList) => {
     setSelectedOptions(optionList);
@@ -91,16 +92,22 @@ const TableComponent = () => {
   };
 
   const handleDetailsClick = () => {
-    if (selectedRows.length === 1) {
-      setDetails(selectedRows.map((id) => rows.find((row) => row.id === id)));
-      setDetails((prevDetails) =>
-        prevDetails.map((row) => ({
-          ...row,
-          shouldCook: row.shouldCook ? "Yes" : "No",
-        }))
-      );
-    }
+    setDetails(selectedRows.map((id) => rows.find((row) => row.id === id)));
+    setDetails((prevDetails) =>
+      prevDetails.map((row) => ({
+        ...row,
+        shouldCook: row.shouldCook ? "Yes" : "No",
+      }))
+    );
   };
+
+  useEffect(() => {
+    if (selectedRows.length === 1) {
+      handleDetailsClick();
+    } else {
+      setDetails([]);
+    }
+  }, [selectedRows]);
 
   return (
     <div>
@@ -118,7 +125,7 @@ const TableComponent = () => {
         </thead>
         <tbody>
           {rows.map((row, index) => (
-            <tr className={index % 2 === 0 ? "even" : "odd"}>
+            <tr key={row.id} className={index % 2 === 0 ? "even" : "odd"}>
               <td>
                 <input
                   type="checkbox"
@@ -186,10 +193,7 @@ const TableComponent = () => {
       <button onClick={handleLogsClick} disabled={selectedRows.length === 0}>
         Logs
       </button>
-      <button
-        onClick={handleDetailsClick}
-        disabled={selectedRows.length === 0 || selectedRows.length > 1}
-      >
+      <button disabled={selectedRows.length === 0 || selectedRows.length > 1}>
         Details
       </button>
       {details.length > 0 && (

@@ -3,7 +3,7 @@
 }
 th {
   border-bottom: 1px solid green;
-  width: fit-content;
+  /* width: fit-content; */
 }
 
 .odd {
