@@ -1,118 +1,10 @@
-import React, { useReducer } from "react";
+import React, { useContext } from "react";
+import { TableContext } from "./TableContext";
 import MultiSelectDropdown from "./MultiSelectDropdown";
 import _ from "lodash";
 
-const table = (state, action) => {
-  switch (action.type) {
-    case "checkboxChange":
-      const { id } = action.payload;
-      return {
-        ...state,
-        selectedRows: _.includes(state.selectedRows, id)
-          ? _.filter(state.selectedRows, (rowId) => rowId !== id)
-          : [...state.selectedRows, id],
-      };
-
-    case "valueChange":
-      const { name, value, type, checked } = action.payload;
-      const newValue = type === "checkbox" ? checked : value;
-
-      if (name === "count" && !isNaN(Number(value))) {
-        return {
-          ...state,
-          newRow: {
-            ...state.newRow,
-            [name]: Number(value),
-          },
-        };
-      } else if (name === "name") {
-        return {
-          ...state,
-          newRow: {
-            ...state.newRow,
-            [name]: value,
-          },
-        };
-      } else {
-        return {
-          ...state,
-          newRow: {
-            ...state.newRow,
-            [name]: newValue,
-          },
-        };
-      }
-
-    case "dropdown":
-      return {
-        ...state,
-        selectedOptions: action.payload,
-        newRow: {
-          ...state.newRow,
-          nutrition: action.payload.map((option) => option.value).join(","),
-        },
-      };
-
-    case "delete":
-      return {
-        ...state,
-        rows: state.rows.filter((row) => !state.selectedRows.includes(row.id)),
-        selectedRows: [],
-      };
-
-    case "logs":
-      console.log(
-        "Selected Rows:",
-        state.selectedRows.map((id) => state.rows.find((row) => row.id === id))
-      );
-      return state;
-
-    case "details":
-      return {
-        ...state,
-        details: state.selectedRows.map((id) =>
-          state.rows.find((row) => row.id === id)
-        ),
-      };
-
-    case "enterKey":
-      return {
-        ...state,
-        rows: [...state.rows, { ...state.newRow }],
-        newRow: {
-          id: state.newRow.id + 1,
-          name: "",
-          description: "",
-          shouldCook: false,
-          nutrition: [],
-          count: 0,
-        },
-        selectedRows: [],
-        selectedOptions: [],
-      };
-
-    default:
-      return state;
-  }
-};
-
-const initialState = {
-  rows: [],
-  selectedRows: [],
-  newRow: {
-    id: 1,
-    name: "",
-    description: "",
-    shouldCook: false,
-    nutrition: [],
-    count: 0,
-  },
-  selectedOptions: [],
-  details: [],
-};
-
 const TableReducer = ({ optionList }) => {
-  const [state, dispatch] = useReducer(table, initialState);
+  const { state, dispatch } = useContext(TableContext);
 
   const handleCheckboxChange = (id) => {
     dispatch({ type: "checkboxChange", payload: { id } });
@@ -151,12 +43,11 @@ const TableReducer = ({ optionList }) => {
     if (event.key === "Enter") {
       dispatch({ type: "enterKey" });
     }
-    console.log("enter pressed");
   };
 
   return (
     <div>
-      <table>
+      <table className="table">
         <thead>
           <tr>
             <th></th>
