@@ -3,8 +3,8 @@ import Select from "react-select";
 
 const MultiSelectDropdown = ({ optionList, onChange, value }) => {
   return (
-    <div className="app">
-      <div className="dropdown-container">
+    <div>
+      <div>
         <Select
           options={optionList}
           placeholder="Select nutrient"
@@ -19,5 +19,3 @@ const MultiSelectDropdown = ({ optionList, onChange, value }) => {
 };
 
 export default MultiSelectDropdown;
-
-

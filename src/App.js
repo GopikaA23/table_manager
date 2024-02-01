@@ -1,13 +1,13 @@
 import "./App.css";
 import "./TableManager.css";
-import TableReducer from "./TableReducer";
+import TableManager from "./TableManager";
 import { TableProvider } from "./TableContext";
 
 function App() {
   return (
     <div className="App">
       <TableProvider>
-        <TableReducer
+        <TableManager
           header={[
             "",
             "ID",
