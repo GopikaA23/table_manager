@@ -8,6 +8,15 @@ function App() {
     <div className="App">
       <TableProvider>
         <TableReducer
+          header={[
+            "",
+            "ID",
+            "Name",
+            "Description",
+            "ShouldCook",
+            "Nutrition",
+            "count",
+          ]}
           optionList={[
             { value: "vitamin A", label: "Vitamin A" },
             { value: "vitamin B", label: "Vitamin B" },
