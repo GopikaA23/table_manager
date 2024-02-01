@@ -5,7 +5,7 @@ import Details from "./Details";
 
 const TableFooter = () => {
   const { onDelete, selectedRows, onDetailsClicked, rows } = useTableContext();
-  const Logs = () => {
+  const handleLogsClicked = () => {
     console.log(
       "Selected Rows:",
       _.map(selectedRows, (id) => rows.find((row) => row.id === id))
@@ -16,7 +16,7 @@ const TableFooter = () => {
       <button onClick={onDelete} disabled={_.size(selectedRows) === 0}>
         Delete
       </button>
-      <button onClick={Logs} disabled={_.size(selectedRows) === 0}>
+      <button onClick={handleLogsClicked} disabled={_.size(selectedRows) === 0}>
         Logs
       </button>
       <button
