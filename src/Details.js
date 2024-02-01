@@ -7,13 +7,13 @@ const Details = () => {
   return (
     <>
       {_.size(details) > 0 && (
-        <div>
+        <div className="details">
           {_.map(details, (row) => (
             <div key={row.id}>
               <p>ID: {row.id}</p>
               <p>Name: {row.name}</p>
               <p>Description: {row.description}</p>
-              <p>Should Cook: {row.shouldCook}</p>
+              <p>Should Cook: {row.shouldCook ? "Yes" : "No"}</p>
               <p>Nutrition: {row.nutrition}</p>
               <p>Count: {row.count}</p>
             </div>
