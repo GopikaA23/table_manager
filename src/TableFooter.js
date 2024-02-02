@@ -8,7 +8,7 @@ const TableFooter = () => {
   const handleLogsClicked = () => {
     console.log(
       "Selected Rows:",
-      _.map(selectedRows, (id) => rows.find((row) => row.id === id))
+      _.map(selectedRows, (id) => _.find(rows, (row) => row.id === id))
     );
   };
   return (

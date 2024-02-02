@@ -167,6 +167,12 @@ const TableProvider = ({ children }) => {
   );
 };
 
-export const useTableContext = () => useContext(TableContext);
+export const useTableContext = () => {
+  const context = useContext(TableContext);
+
+  if (!context) throw Error("");
+
+  return context;
+};
 
 export { TableContext, TableProvider };
