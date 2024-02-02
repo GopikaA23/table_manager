@@ -3,7 +3,7 @@ import _ from "lodash";
 import TableNewRow from "./TableNewRow";
 import { useTableContext } from "./TableContext";
 
-const TableBody = ({ optionList }) => {
+const TableBody = ({ options }) => {
   const { rows, selectedRows, onCheckboxChange } = useTableContext();
   return (
     <tbody>
@@ -24,9 +24,7 @@ const TableBody = ({ optionList }) => {
           <td>{row.count}</td>
         </tr>
       ))}
-      <tr>
-        <TableNewRow optionList={optionList} />
-      </tr>
+      <TableNewRow options={options} />
     </tbody>
   );
 };

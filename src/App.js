@@ -8,16 +8,7 @@ function App() {
     <div className="App">
       <TableProvider>
         <TableManager
-          header={[
-            "",
-            "ID",
-            "Name",
-            "Description",
-            "ShouldCook",
-            "Nutrition",
-            "count",
-          ]}
-          optionList={[
+          nutritionList={[
             { value: "vitamin A", label: "Vitamin A" },
             { value: "vitamin B", label: "Vitamin B" },
             { value: "vitamin C", label: "Vitamin C" },

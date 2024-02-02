@@ -1,13 +1,66 @@
 import React from "react";
 import MultiSelectDropdown from "./MultiSelectDropdown";
 import { useTableContext } from "./TableContext";
+import _ from "lodash";
 
-const TableNewRow = ({ optionList }) => {
-  const { newRow, onChange, selectedOptions, onKeyPress, onSelect } =
+const TableNewRow = ({ options }) => {
+  const { header, newRow, onChange, selectedOptions, onKeyPress, onSelect } =
     useTableContext();
-  return (
-    <>
-      <td></td>
+
+  return _.map(header, (data) => {
+    
+    switch (data.type) {
+      case "text":
+        return (
+          <td>
+            <input
+              type={data.type}
+              name={data.name}
+              value={newRow[data.name]}
+              onChange={onChange}
+            />
+          </td>
+        );
+      case "dropdown":
+        return (
+          <td>
+            <MultiSelectDropdown
+              options={options}
+              onChange={onSelect}
+              value={selectedOptions}
+            />
+          </td>
+        );
+      case "checkbox":
+        const checked = data.name;
+        return (
+          <td>
+            <input
+              type={data.type}
+              name={data.name}
+              checked={newRow[checked]}
+              onChange={onChange}
+            />
+          </td>
+        );
+      case "number":
+        return (
+          <td>
+            <input
+              type={data.type}
+              name={data.name}
+              onChange={onChange}
+              onKeyPress={onKeyPress}
+            />
+          </td>
+        );
+      default:
+        return <td>{newRow.id}</td>;
+    }
+  });
+};
+
+/* <td></td>
       <td>{newRow.id}</td>
       <td>
         <input
@@ -35,7 +88,7 @@ const TableNewRow = ({ optionList }) => {
       </td>
       <td>
         <MultiSelectDropdown
-          optionList={optionList}
+          nutritionList={nutritionList}
           onChange={onSelect}
           value={selectedOptions}
         />
@@ -48,9 +101,6 @@ const TableNewRow = ({ optionList }) => {
           onChange={onChange}
           onKeyPress={onKeyPress}
         />
-      </td>
-    </>
-  );
-};
+      </td> */
 
 export default TableNewRow;

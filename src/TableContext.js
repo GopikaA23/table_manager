@@ -33,7 +33,7 @@ const tableReducer = (state, action) => {
       const { name, value, type, checked } = action.payload;
       const newValue = type === "checkbox" ? checked : value;
 
-      if (name === "count" && !isNaN(Number(value))) {
+      if (name === "Count" && !isNaN(Number(value))) {
         return {
           ...state,
           newRow: {
@@ -41,7 +41,7 @@ const tableReducer = (state, action) => {
             [name]: Number(value),
           },
         };
-      } else if (name === "name") {
+      } else if (name === "Name") {
         return {
           ...state,
           newRow: {
@@ -148,12 +148,23 @@ const TableProvider = ({ children }) => {
     }
   };
 
+  const tableHeader = [
+    { name: "", type: "checkbox" , isDropdown: false},
+    { name: "ID", type: "", isDropdown: false },
+    { name: "Name", type: "text" ,isDropdown: false},
+    { name: "Description", type: "text" ,isDropdown: false},
+    { name: "ShouldCook", type: "checkbox",isDropdown: false },
+    { name: "Nutrition", type: "dropdown", isDropdown: true },
+    { name: "Count", type: "number",isDropdown: false },
+  ];
+
   const value = {
     rows: state.rows,
     selectedOptions: state.selectedOptions,
     newRow: state.newRow,
     selectedRows: state.selectedRows,
     details: state.details,
+    header: tableHeader,
     onDelete: handleDeleteRows,
     onChange: handleChange,
     onCheckboxChange: handleCheckboxChange,

@@ -1,12 +1,12 @@
 import React from "react";
 import Select from "react-select";
 
-const MultiSelectDropdown = ({ optionList, onChange, value }) => {
+const MultiSelectDropdown = ({ options, onChange, value }) => {
   return (
     <div>
       <div>
         <Select
-          options={optionList}
+          options={options}
           placeholder="Select nutrient"
           value={value}
           onChange={onChange}
