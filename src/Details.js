@@ -11,11 +11,11 @@ const Details = () => {
           {_.map(details, (row) => (
             <div key={row.id}>
               <p>ID: {row.id}</p>
-              <p>Name: {row.name}</p>
-              <p>Description: {row.description}</p>
-              <p>Should Cook: {row.shouldCook ? "Yes" : "No"}</p>
+              <p>Name: {row.Name}</p>
+              <p>Description: {row.Description}</p>
+              <p>Should Cook: {row.ShouldCook ? "Yes" : "No"}</p>
               <p>Nutrition: {row.nutrition}</p>
-              <p>Count: {row.count}</p>
+              <p>Count: {row.Count}</p>
             </div>
           ))}
         </div>

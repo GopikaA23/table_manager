@@ -5,6 +5,7 @@ import { useTableContext } from "./TableContext";
 
 const TableBody = ({ options }) => {
   const { rows, selectedRows, onCheckboxChange } = useTableContext();
+
   return (
     <tbody>
       {_.map(rows, (row, index) => (
@@ -17,14 +18,14 @@ const TableBody = ({ options }) => {
             />
           </td>
           <td>{row.id}</td>
-          <td>{row.name}</td>
-          <td>{row.description}</td>
-          <td>{row.shouldCook ? "Yes" : "No"}</td>
+          <td>{row.Name}</td>
+          <td>{row.Description}</td>
+          <td>{row.ShouldCook ? "Yes" : "No"}</td>
           <td>{row.nutrition}</td>
-          <td>{row.count}</td>
+          <td>{row.Count}</td>
         </tr>
       ))}
-      <TableNewRow options={options} />
+        <TableNewRow options={options} />
     </tbody>
   );
 };

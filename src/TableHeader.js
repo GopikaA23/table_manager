@@ -8,7 +8,7 @@ const TableHeader = () => {
     <thead>
       <tr>
         {_.map(header, (head) => (
-          <th key={head.name}>{head.name} </th>
+          <th key={head.label}>{head.label} </th>
         ))}
       </tr>
     </thead>

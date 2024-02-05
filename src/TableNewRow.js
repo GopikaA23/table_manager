@@ -7,57 +7,60 @@ const TableNewRow = ({ options }) => {
   const { header, newRow, onChange, selectedOptions, onKeyPress, onSelect } =
     useTableContext();
 
-  return _.map(header, (data) => {
-    
-    switch (data.type) {
-      case "text":
-        return (
-          <td>
-            <input
-              type={data.type}
-              name={data.name}
-              value={newRow[data.name]}
-              onChange={onChange}
-            />
-          </td>
-        );
-      case "dropdown":
-        return (
-          <td>
-            <MultiSelectDropdown
-              options={options}
-              onChange={onSelect}
-              value={selectedOptions}
-            />
-          </td>
-        );
-      case "checkbox":
-        const checked = data.name;
-        return (
-          <td>
-            <input
-              type={data.type}
-              name={data.name}
-              checked={newRow[checked]}
-              onChange={onChange}
-            />
-          </td>
-        );
-      case "number":
-        return (
-          <td>
-            <input
-              type={data.type}
-              name={data.name}
-              onChange={onChange}
-              onKeyPress={onKeyPress}
-            />
-          </td>
-        );
-      default:
-        return <td>{newRow.id}</td>;
-    }
-  });
+  return (
+    <tr>
+      {_.map(header, (data) => {
+        switch (data.type) {
+          case "text":
+            return (
+              <td key={data.name}>
+                <input
+                  type={data.type}
+                  name={data.label}
+                  value={newRow[data.label] || ""}
+                  onChange={onChange}
+                />
+              </td>
+            );
+          case "dropdown":
+            return (
+              <td key={data.name}>
+                <MultiSelectDropdown
+                  options={options}
+                  onChange={onSelect}
+                  value={selectedOptions}
+                />
+              </td>
+            );
+          case "checkbox":
+            return (
+              <td key={data.name}>
+                <input
+                  type={data.type}
+                  name={data.label}
+                  checked={newRow[data.label] || false}
+                  onChange={onChange}
+                />
+              </td>
+            );
+          case "number":
+            return (
+              <td key={data.name}>
+                <input
+                  type={data.type}
+                  name={data.label}
+                  value={newRow[data.label] || "0"}
+                  onChange={onChange}
+                  onKeyPress={onKeyPress}
+                />
+              </td>
+            );
+          default:
+            return <td key={data.name}>{newRow[data.label]}</td>;
+        }
+      })}
+    </tr>
+  );
 };
 
 /* <td></td>

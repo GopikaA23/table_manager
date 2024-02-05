@@ -28,12 +28,11 @@ const tableReducer = (state, action) => {
           ? _.filter(state.selectedRows, (rowId) => rowId !== id)
           : [...state.selectedRows, id],
       };
-
     case "VALUE_CHANGE":
       const { name, value, type, checked } = action.payload;
       const newValue = type === "checkbox" ? checked : value;
 
-      if (name === "Count" && !isNaN(Number(value))) {
+      if (name === "count" && !isNaN(Number(value))) {
         return {
           ...state,
           newRow: {
@@ -41,7 +40,7 @@ const tableReducer = (state, action) => {
             [name]: Number(value),
           },
         };
-      } else if (name === "Name") {
+      } else if (name === "name") {
         return {
           ...state,
           newRow: {
@@ -75,8 +74,9 @@ const tableReducer = (state, action) => {
     case "DELETE":
       return {
         ...state,
-        rows: _.filter(state.rows, (row) =>
-          _.includes(!state.selectedRows, row.id)
+        rows: _.filter(
+          state.rows,
+          (row) => !state.selectedRows.includes(row.id)
         ),
         selectedRows: [],
       };
@@ -85,13 +85,12 @@ const tableReducer = (state, action) => {
       return {
         ...state,
         details: _.map(state.selectedRows, (id) =>
-          state.rows.find((row) => row.id === id)
+          _.find(state.rows, (row) => row.id === id)
         ),
       };
 
     case "ENTER_KEY":
       return {
-        ...state,
         rows: [...state.rows, { ...state.newRow }],
         newRow: {
           id: state.newRow.id + 1,
@@ -149,13 +148,28 @@ const TableProvider = ({ children }) => {
   };
 
   const tableHeader = [
-    { name: "", type: "checkbox" , isDropdown: false},
-    { name: "ID", type: "", isDropdown: false },
-    { name: "Name", type: "text" ,isDropdown: false},
-    { name: "Description", type: "text" ,isDropdown: false},
-    { name: "ShouldCook", type: "checkbox",isDropdown: false },
-    { name: "Nutrition", type: "dropdown", isDropdown: true },
-    { name: "Count", type: "number",isDropdown: false },
+    { name: "", label: "", type: "checkbox", isDropdown: false },
+    { name: "id", label: "Id", type: "", isDropdown: false },
+    { name: "name", label: "Name", type: "text", isDropdown: false },
+    {
+      name: "description",
+      label: "Description",
+      type: "text",
+      isDropdown: false,
+    },
+    {
+      name: "shouldCook",
+      label: "ShouldCook",
+      type: "checkbox",
+      isDropdown: false,
+    },
+    {
+      name: "nutrition",
+      label: "Nutrition",
+      type: "dropdown",
+      isDropdown: true,
+    },
+    { name: "count", label: "Count", type: "number", isDropdown: false },
   ];
 
   const value = {
