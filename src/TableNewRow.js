@@ -3,9 +3,16 @@ import MultiSelectDropdown from "./MultiSelectDropdown";
 import { useTableContext } from "./TableContext";
 import _ from "lodash";
 
-const TableNewRow = ({ options }) => {
-  const { header, newRow, onChange, selectedOptions, onKeyPress, onSelect } =
-    useTableContext();
+const TableNewRow = () => {
+  const {
+    header,
+    newRow,
+    onChange,
+    selectedOptions,
+    onKeyPress,
+    onSelect,
+    options,
+  } = useTableContext();
 
   return (
     <tr>

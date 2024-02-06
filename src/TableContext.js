@@ -6,14 +6,7 @@ const TableContext = createContext();
 const initialState = {
   rows: [],
   selectedRows: [],
-  newRow: {
-    id: 1,
-    name: "",
-    description: "",
-    shouldCook: false,
-    nutrition: [],
-    count: 0,
-  },
+  newRow: { id: 1 },
   selectedOptions: [],
   details: [],
 };
@@ -94,11 +87,6 @@ const tableReducer = (state, action) => {
         rows: [...state.rows, { ...state.newRow }],
         newRow: {
           id: state.newRow.id + 1,
-          name: "",
-          description: "",
-          shouldCook: false,
-          nutrition: [],
-          count: 0,
         },
         selectedRows: [],
         selectedOptions: [],
@@ -109,7 +97,7 @@ const tableReducer = (state, action) => {
   }
 };
 
-const TableProvider = ({ children }) => {
+const TableProvider = ({ header, options, children }) => {
   const [state, dispatch] = useReducer(tableReducer, initialState);
 
   const handleCheckboxChange = (id) => {
@@ -129,8 +117,8 @@ const TableProvider = ({ children }) => {
     }
   };
 
-  const handleSelect = (optionList) => {
-    dispatch({ type: "DROPDOWN", payload: optionList });
+  const handleSelect = (options) => {
+    dispatch({ type: "DROPDOWN", payload: options });
   };
 
   const handleDeleteRows = () => {
@@ -147,38 +135,14 @@ const TableProvider = ({ children }) => {
     }
   };
 
-  const tableHeader = [
-    { name: "", label: "", type: "checkbox", isDropdown: false },
-    { name: "id", label: "Id", type: "", isDropdown: false },
-    { name: "name", label: "Name", type: "text", isDropdown: false },
-    {
-      name: "description",
-      label: "Description",
-      type: "text",
-      isDropdown: false,
-    },
-    {
-      name: "shouldCook",
-      label: "ShouldCook",
-      type: "checkbox",
-      isDropdown: false,
-    },
-    {
-      name: "nutrition",
-      label: "Nutrition",
-      type: "dropdown",
-      isDropdown: true,
-    },
-    { name: "count", label: "Count", type: "number", isDropdown: false },
-  ];
-
   const value = {
     rows: state.rows,
     selectedOptions: state.selectedOptions,
     newRow: state.newRow,
     selectedRows: state.selectedRows,
     details: state.details,
-    header: tableHeader,
+    header: header,
+    options: options,
     onDelete: handleDeleteRows,
     onChange: handleChange,
     onCheckboxChange: handleCheckboxChange,

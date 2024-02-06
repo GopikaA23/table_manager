@@ -3,12 +3,12 @@ import TableHeader from "./TableHeader";
 import TableBody from "./TableBody";
 import TableFooter from "./TableFooter";
 
-const TableManager = ({ nutritionList, header }) => {
+const TableManager = () => {
   return (
     <div>
       <table className="table">
-        <TableHeader header={header} />
-        <TableBody options={nutritionList} header={header} />
+        <TableHeader />
+        <TableBody />
       </table>
       <TableFooter />
     </div>
