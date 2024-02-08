@@ -3,20 +3,18 @@ import _ from "lodash";
 import { useTableContext } from "./TableContext";
 
 const Details = () => {
-  const { details } = useTableContext();
+  const { header, details } = useTableContext();
+  const data = _.mapKeys(
+    details,
+    (_value, key) => _.find(header, (row) => row.name === key).label
+  );
+
   return (
     <>
       {_.size(details) > 0 && (
-        <div className="details">
-          {_.map(details, (row) => (
-            <div key={row.id}>
-              <p>ID: {row.id}</p>
-              <p>Name: {row.Name}</p>
-              <p>Description: {row.Description}</p>
-              <p>Should Cook: {row.ShouldCook ? "Yes" : "No"}</p>
-              <p>Nutrition: {row.nutrition}</p>
-              <p>Count: {row.Count}</p>
-            </div>
+        <div className="details-page">
+          {_.map(data, (value, key) => (
+            <p key={key}>{`${key} : ${value}`}</p>
           ))}
         </div>
       )}

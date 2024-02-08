@@ -6,10 +6,10 @@ const MultiSelectDropdown = ({ options, onChange, value }) => {
     <div>
       <div>
         <Select
-          options={options}
           placeholder="Select nutrient"
-          value={value}
+          options={options}
           onChange={onChange}
+          value={value}
           isSearchable={true}
           isMulti
         />

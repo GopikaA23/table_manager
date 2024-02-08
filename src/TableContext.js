@@ -8,7 +8,7 @@ const initialState = {
   selectedRows: [],
   newRow: { id: 1 },
   selectedOptions: [],
-  details: [],
+  details: {},
 };
 
 const tableReducer = (state, action) => {
@@ -77,8 +77,8 @@ const tableReducer = (state, action) => {
     case "DETAILS":
       return {
         ...state,
-        details: _.map(state.selectedRows, (id) =>
-          _.find(state.rows, (row) => row.id === id)
+        details: _.find(state.rows, (row) =>
+          _.includes(state.selectedRows, row.id)
         ),
       };
 

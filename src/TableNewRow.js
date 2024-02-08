@@ -7,11 +7,13 @@ const TableNewRow = () => {
   const {
     header,
     newRow,
+    rows,
     onChange,
     selectedOptions,
     onKeyPress,
     onSelect,
-    options,
+    selectedRows,
+    onCheckboxChange,
   } = useTableContext();
 
   return (
@@ -23,8 +25,8 @@ const TableNewRow = () => {
               <td key={data.name}>
                 <input
                   type={data.type}
-                  name={data.label}
-                  value={newRow[data.label] || ""}
+                  name={data.name}
+                  value={newRow[data.name] || ""}
                   onChange={onChange}
                 />
               </td>
@@ -33,84 +35,52 @@ const TableNewRow = () => {
             return (
               <td key={data.name}>
                 <MultiSelectDropdown
-                  options={options}
+                  options={data.options}
                   onChange={onSelect}
                   value={selectedOptions}
                 />
               </td>
             );
-          case "checkbox":
-            return (
-              <td key={data.name}>
-                <input
-                  type={data.type}
-                  name={data.label}
-                  checked={newRow[data.label] || false}
-                  onChange={onChange}
-                />
-              </td>
-            );
+          case "checkbox": 
+            _.map(rows, (row) => {
+              return (
+                <td key={data.name}>
+                  <input
+                    type={data.type}
+                    name={data.name}
+                    checked={
+                      data.name
+                        ? newRow[data.name] || false
+                        : _.includes(selectedRows, row.id)
+                    }
+                    onChange={
+                      data.name
+                        ? (e) => onChange(e)
+                        : () => onCheckboxChange(row.id)
+                    }
+                  />
+                </td>
+              );
+            });
+          
           case "number":
             return (
               <td key={data.name}>
                 <input
                   type={data.type}
-                  name={data.label}
-                  value={newRow[data.label] || "0"}
+                  name={data.name}
+                  value={newRow[data.name] || "0"}
                   onChange={onChange}
                   onKeyPress={onKeyPress}
                 />
               </td>
             );
           default:
-            return <td key={data.name}>{newRow[data.label]}</td>;
+            return <td key={data.name}>{newRow[data.name]}</td>;
         }
       })}
     </tr>
   );
 };
-
-/* <td></td>
-      <td>{newRow.id}</td>
-      <td>
-        <input
-          type="text"
-          name="name"
-          value={newRow.name}
-          onChange={onChange}
-        />
-      </td>
-      <td>
-        <input
-          type="text"
-          name="description"
-          value={newRow.description}
-          onChange={onChange}
-        />
-      </td>
-      <td>
-        <input
-          type="checkbox"
-          name="shouldCook"
-          checked={newRow.shouldCook}
-          onChange={onChange}
-        />
-      </td>
-      <td>
-        <MultiSelectDropdown
-          nutritionList={nutritionList}
-          onChange={onSelect}
-          value={selectedOptions}
-        />
-      </td>
-      <td>
-        <input
-          type="number"
-          name="count"
-          value={newRow.count}
-          onChange={onChange}
-          onKeyPress={onKeyPress}
-        />
-      </td> */
 
 export default TableNewRow;
