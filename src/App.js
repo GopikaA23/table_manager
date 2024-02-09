@@ -17,6 +17,7 @@ function App() {
       name: "shouldCook",
       label: "ShouldCook",
       type: "checkbox",
+      isBoolean: true,
     },
     {
       name: "nutrition",

@@ -25,7 +25,7 @@ const tableReducer = (state, action) => {
       const { name, value, type, checked } = action.payload;
       const newValue = type === "checkbox" ? checked : value;
 
-      if (name === "count" && !isNaN(Number(value))) {
+      if (type === "number" && !isNaN(Number(value))) {
         return {
           ...state,
           newRow: {
@@ -33,7 +33,7 @@ const tableReducer = (state, action) => {
             [name]: Number(value),
           },
         };
-      } else if (name === "name") {
+      } else if (type === "text") {
         return {
           ...state,
           newRow: {
@@ -107,7 +107,7 @@ const TableProvider = ({ header, options, children }) => {
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
-    if (name === "name") {
+    if (type === "number") {
       dispatch({ type: "VALUE_CHANGE", payload: { name, value } });
     } else {
       dispatch({

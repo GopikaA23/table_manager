@@ -13,9 +13,11 @@ const Details = () => {
     <>
       {_.size(details) > 0 && (
         <div className="details-page">
-          {_.map(data, (value, key) => (
-            <p key={key}>{`${key} : ${value}`}</p>
-          ))}
+          {_.map(data, (value, key) => {
+            const ans =
+              typeof value === "boolean" ? (value ? "yes" : "no") : value;
+            return <p key={key}>{`${key} :  ${ans}`}</p>;
+          })}
         </div>
       )}
     </>

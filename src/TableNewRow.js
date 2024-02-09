@@ -4,17 +4,8 @@ import { useTableContext } from "./TableContext";
 import _ from "lodash";
 
 const TableNewRow = () => {
-  const {
-    header,
-    newRow,
-    rows,
-    onChange,
-    selectedOptions,
-    onKeyPress,
-    onSelect,
-    selectedRows,
-    onCheckboxChange,
-  } = useTableContext();
+  const { header, newRow, onChange, selectedOptions, onKeyPress, onSelect } =
+    useTableContext();
 
   return (
     <tr>
@@ -41,35 +32,25 @@ const TableNewRow = () => {
                 />
               </td>
             );
-          case "checkbox": 
-            _.map(rows, (row) => {
-              return (
-                <td key={data.name}>
-                  <input
-                    type={data.type}
-                    name={data.name}
-                    checked={
-                      data.name
-                        ? newRow[data.name] || false
-                        : _.includes(selectedRows, row.id)
-                    }
-                    onChange={
-                      data.name
-                        ? (e) => onChange(e)
-                        : () => onCheckboxChange(row.id)
-                    }
-                  />
-                </td>
-              );
-            });
-          
+          case "checkbox":
+            return (
+              <td key={data.name}>
+                <input
+                  type={data.type}
+                  name={data.name}
+                  checked={newRow[data.name] || false}
+                  onChange={onChange}
+                />
+              </td>
+            );
+
           case "number":
             return (
               <td key={data.name}>
                 <input
                   type={data.type}
                   name={data.name}
-                  value={newRow[data.name] || "0"}
+                  value={newRow[data.name] || 0}
                   onChange={onChange}
                   onKeyPress={onKeyPress}
                 />

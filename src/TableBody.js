@@ -4,15 +4,24 @@ import TableNewRow from "./TableNewRow";
 import { useTableContext } from "./TableContext";
 
 const TableBody = () => {
-  const { rows, header } = useTableContext();
-
+  const { rows, header, onCheckboxChange, selectedRows } = useTableContext();
+  const handleCheckboxChange = (rowId, columnName) => {
+    onCheckboxChange(rowId, columnName);
+  };
   return (
     <tbody>
       {_.map(rows, (row, index) => (
         <tr key={row.id} className={index % 2 === 0 ? "even" : "odd"}>
-          {header.map((column) => {
-            return <td key={column.name}>{Cell(row, column)}</td>;
-          })}
+          {_.map(header, (column) => (
+            <td key={column.name}>
+              <Cell
+                row={row}
+                column={column}
+                onCheckboxChange={handleCheckboxChange}
+                selectedRows={selectedRows}
+              />
+            </td>
+          ))}
         </tr>
       ))}
       <TableNewRow />
@@ -20,20 +29,22 @@ const TableBody = () => {
   );
 };
 
-const Cell = (row, column) => {
-  const { onCheckboxChange, selectedRows } = useTableContext();
+const Cell = ({ row, column, onCheckboxChange }) => {
+  const handleCheckbox = () => {
+    onCheckboxChange(row.id, column.name);
+  };
+
   switch (column.type) {
     case "checkbox":
-      if (column.name === "") {
+      if (!column.isBoolean) {
         return (
           <input
             type="checkbox"
-            checked={_.includes(selectedRows, row.id)}
-            onChange={() => onCheckboxChange(row.id)}
+            checked={row[column.name]}
+            onChange={handleCheckbox}
           />
         );
       } else {
-        console.log("check", column.name);
         return row[column.name] ? "Yes" : "No";
       }
     default:

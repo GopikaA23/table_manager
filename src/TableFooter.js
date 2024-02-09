@@ -6,6 +6,7 @@ import Details from "./Details";
 const TableFooter = () => {
   const { onDelete, selectedRows, onDetailsClicked, rows } = useTableContext();
   const handleLogsClicked = () => {
+    console.log("selectedrows", selectedRows);
     console.log(
       "Selected Rows:",
       _.map(selectedRows, (id) => _.find(rows, (row) => row.id === id))
