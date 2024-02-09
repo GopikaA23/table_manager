@@ -38,7 +38,7 @@ const TableNewRow = () => {
                 <input
                   type={data.type}
                   name={data.name}
-                  checked={newRow[data.name] || false}
+                  checked={newRow[data.name]}
                   onChange={onChange}
                 />
               </td>

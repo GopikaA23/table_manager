@@ -6,7 +6,7 @@ const TableContext = createContext();
 const initialState = {
   rows: [],
   selectedRows: [],
-  newRow: { id: 1 },
+  newRow: { id: 1, shouldCook: false },
   selectedOptions: [],
   details: {},
 };
