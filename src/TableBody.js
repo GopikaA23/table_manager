@@ -3,6 +3,29 @@ import _ from "lodash";
 import TableNewRow from "./TableNewRow";
 import { useTableContext } from "./TableContext";
 
+const Cell = ({ row, column, onCheckboxChange }) => {
+  const handleCheckbox = () => {
+    onCheckboxChange(row.id, column.name);
+  };
+
+  switch (column.type) {
+    case "checkbox":
+      if (!column.isBoolean) {
+        return (
+          <input
+            type="checkbox"
+            checked={row[column.name]}
+            onChange={handleCheckbox}
+          />
+        );
+      } else {
+        return row[column.name] ? "Yes" : "No";
+      }
+    default:
+      return row[column.name];
+  }
+};
+
 const TableBody = () => {
   const { rows, header, onCheckboxChange, selectedRows } = useTableContext();
   const handleCheckboxChange = (rowId, columnName) => {
@@ -27,29 +50,6 @@ const TableBody = () => {
       <TableNewRow />
     </tbody>
   );
-};
-
-const Cell = ({ row, column, onCheckboxChange }) => {
-  const handleCheckbox = () => {
-    onCheckboxChange(row.id, column.name);
-  };
-
-  switch (column.type) {
-    case "checkbox":
-      if (!column.isBoolean) {
-        return (
-          <input
-            type="checkbox"
-            checked={row[column.name]}
-            onChange={handleCheckbox}
-          />
-        );
-      } else {
-        return row[column.name] ? "Yes" : "No";
-      }
-    default:
-      return row[column.name];
-  }
 };
 
 export default TableBody;
